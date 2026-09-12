@@ -12,6 +12,8 @@ inherit extrausers
 #Set rootfs to 200MiB by default
 IMAGE_OVER_HEAD_FACTORY ?="1.0"
 IMAGE_ROOTFS_SIZE ?= "204800"
+IMAGE_ROOTFS_EXTRA_SPACE = "1500000"
+
 #change root passwword (note the capital -P which is different from linux command)
 EXTRA_USERS_PARAMS="\
 	usermod -P 'toor' root \
@@ -46,4 +48,34 @@ IMAGE_INSTALL += " savvycan"
 
 #TO be able to use ip link set for can
 IMAGE_INSTALL += " iproute2 can-utils"
+
+#Tools for i2cdetect
+IMAGE_INSTALL += " i2c-tools"
+
+#Tools for set/reset gpios defined in dt
+IMAGE_INSTALL += " libgpiod libgpiod-tools"
+
+#OpenPLC customized
+#IMAGE_INSTALL += " openplc"
+#The tools to compile on target STM32MP1
+IMAGE_INSTALL += " \
+    packagegroup-core-buildessential \
+    python3 \
+    python3-flask \
+    python3-flask-login \
+    python3-pip \
+    git \
+    bison \
+    flex \
+    cmake \
+    e2fsprogs-resize2fs \
+    libmodbus libmodbus-dev \
+"
+
+# Ajouter  python3-pyserial, si on veut que l'automate utilise Modbus ou RS485
+
+#For Hardware layer with openplc on STM32 gpiod.h (dev compilation needed)
+IMAGE_INSTALL += " libgpiod-dev"
+
+
 
