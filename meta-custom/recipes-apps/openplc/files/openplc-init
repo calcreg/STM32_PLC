@@ -9,18 +9,62 @@
 ### END INIT INFO
 
 OPENPLC_DIR="/home/root/OpenPLC_v3"
+OPENPLC_COMPILED_PROG="$OPENPLC_DIR/webserver/core/openplc"
+
+lcdlight() {
+    echo -e "\x1b[L+" > /dev/lcd
+}
+lcdlightoff() {                             
+    echo -e "\x1b[L-" > /dev/lcd  
+}
+lcdclear() {
+    echo -e "\x1b[L1" > /dev/lcd
+}
+#Set time for correct webserver and ssh exchanges
+ntpd -q -n -p fr.pool.ntp.org
 
 case "$1" in
     start)
         echo "Starting OpenPLC..."
         cd $OPENPLC_DIR && ./start_openplc.sh > /var/log/openplc.log 2>&1 &
-	#Erase Liquid Crystal LCD Display
-        echo -e "\x1b[L+" > /dev/lcd
-	#Display PLC Prompt
+        lcdlight
+        lcdclear
         echo -e "STM32MP157A-DK1\nCustom PLC" > /dev/lcd
+        sleep 2
+        #lcdclear
+        if [ -e "$OPENPLC_COMPILED_PROG" ]; then
+           echo -e "PLC prog Found\n" > /dev/lcd
+           sleep 2
+           #lcdclear
+           echo -e "To Launch Press:" > /dev/lcd
+           echo -n "Green Btn" > /dev/lcd
+           ctn=5
+           while [ "$ctn" -gt 0 ]; do
+             if [ "$(gpioget gpiochip0 8)" -eq 0 ]; then
+                   lcdclear
+                   echo -e "LAUNCHING PROG..." > /dev/lcd 
+                   sleep 2
+
+                   # Execute OpenPLC runtime
+                   "$OPENPLC_COMPILED_PROG"
+
+                   # Exit loop after program finishes running
+                   break
+             fi
+             echo -n "." > /dev/lcd
+             ctn=$((ctn - 1))
+             sleep 1
+           done
+           lcdclear                                                           
+           echo -e "STM32MP157A-DK1\nCustom PLC" > /dev/lcd
+           sleep 5
+           lcdlightoff
+        fi
         ;;
     stop)
         echo "Stopping OpenPLC..."
+        lcdlight
+        lcdclear
         echo -e "Closing PLC\nBye..." > /dev/lcd
         pkill -f openplc
         pkill -f "python.*webserver.py"
