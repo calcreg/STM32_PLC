@@ -1,0 +1,16 @@
+diff --git a/arch/arm/boot/dts/stm32mp157a-dk1.dts b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+index 2181e28..7638035 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dk1.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+@@ -27,4 +27,11 @@
+ 	};
+ };
+ 
++&m_can1 {
++       pinctrl-names = "default", "sleep";
++       pinctrl-0 = <&m_can1_pins_a>;
++       pinctrl-1 = <&m_can1_sleep_pins_a>;
++       status = "okay";
++};
++
+ 

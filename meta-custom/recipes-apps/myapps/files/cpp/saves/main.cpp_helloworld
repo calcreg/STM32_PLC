@@ -1,0 +1,40 @@
+#include <QApplication>
+#include <QLabel>
+#include <QFont>
+#include <QFontDatabase>
+#include <QDebug>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    qDebug() << "Qt version:" << QT_VERSION_STR;
+    qDebug() << "Available font families:";
+    const QStringList families = QFontDatabase().families();
+    for (const QString &family : families)
+        qDebug() << " -" << family;
+
+    QLabel label("Hello World!");
+
+    QFont font("Liberation Sans", 32);
+    if (!font.exactMatch())
+        qDebug() << "Requested font not found, using default font.";
+
+    font.setPixelSize(100);
+    font.setWeight(QFont::Bold);
+    label.setFont(font);
+
+    label.setAlignment(Qt::AlignCenter);
+    label.resize(1280, 720);
+
+    label.setStyleSheet(
+        "background-color: grey;"
+        "color: black;"
+    );
+
+    label.show();
+
+    return app.exec();
+}
+
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Setting console font"
+        /usr/bin/setfont /usr/share/consolefonts/latarcyrheb-sun32.psfu
+        ;;
+    stop|restart|reload)
+        ;;
+    *)
+        echo "Usage: $0 {start}"
+        exit 1
+        ;;
+esac
+
+exit 0
+

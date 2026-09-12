@@ -1,0 +1,27 @@
+diff --git a/arch/arm/boot/dts/stm32mp157a-dk1.dts b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+index f415e58..7b50d26 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dk1.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dk1.dts
+@@ -13,7 +13,7 @@
+ #include "stm32mp15xx-dkx.dtsi"
+ 
+ / {
+-	model = "STMicroelectronics STM32MP157A-DK1 Discovery Board";
++	model = "STM32MP157A-DK1 Discovery Board -- Regan:DT patched for open CAN";
+ 	compatible = "st,stm32mp157a-dk1", "st,stm32mp157";
+ 
+ 	aliases {
+@@ -26,3 +26,13 @@
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ };
++
++&m_can1 {
++       pinctrl-names = "default", "sleep";
++       pinctrl-0 = <&m_can1_pins_a>;
++       pinctrl-1 = <&m_can1_sleep_pins_a>;
++       status = "okay";
++};
++
++
++
