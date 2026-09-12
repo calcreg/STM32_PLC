@@ -1,33 +1,40 @@
 #!/bin/sh
-OPENPLC_DIR="/etc/openplc/webserver"
-PIDFILE="/var/run/openplc.pid"
-LOGFILE="/var/log/openplc.log"
+### BEGIN INIT INFO
+# Provides:          openplc
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     5
+# Default-Stop:      0 1 6
+# Short-Description: OpenPLC v3 Service
+### END INIT INFO
+
+OPENPLC_DIR="/home/root/OpenPLC_v3"
 
 case "$1" in
     start)
-        echo "Starting OpenPLC Webserver..."
-        cd $OPENPLC_DIR
-        python3 webserver.py > $LOGFILE 2>&1 &
-        echo $! > $PIDFILE
+        echo "Starting OpenPLC..."
+        cd $OPENPLC_DIR && ./start_openplc.sh > /var/log/openplc.log 2>&1 &
+	#Erase Liquid Crystal LCD Display
+        echo -e "\x1b[L+" > /dev/lcd
+	#Display PLC Prompt
+        echo -e "STM32MP157A-DK1\nCustom PLC" > /dev/lcd
         ;;
     stop)
         echo "Stopping OpenPLC..."
-        if [ -f $PIDFILE ]; then
-            kill $(cat $PIDFILE) 2>/dev/null
-            rm -f $PIDFILE
-        fi
-        killall -q python3
-        killall -q openplc
+        echo -e "Closing PLC\nBye..." > /dev/lcd
+        pkill -f openplc
+        pkill -f "python.*webserver.py"
         ;;
     restart)
         $0 stop
-        sleep 1
+        sleep 2
         $0 start
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart}"
+        echo "Usage: /etc/init.d/openplc {start|stop|restart}"
         exit 1
         ;;
 esac
 
 exit 0
+
