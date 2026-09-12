@@ -1,0 +1,33 @@
+#!/bin/sh
+OPENPLC_DIR="/etc/openplc/webserver"
+PIDFILE="/var/run/openplc.pid"
+LOGFILE="/var/log/openplc.log"
+
+case "$1" in
+    start)
+        echo "Starting OpenPLC Webserver..."
+        cd $OPENPLC_DIR
+        python3 webserver.py > $LOGFILE 2>&1 &
+        echo $! > $PIDFILE
+        ;;
+    stop)
+        echo "Stopping OpenPLC..."
+        if [ -f $PIDFILE ]; then
+            kill $(cat $PIDFILE) 2>/dev/null
+            rm -f $PIDFILE
+        fi
+        killall -q python3
+        killall -q openplc
+        ;;
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
