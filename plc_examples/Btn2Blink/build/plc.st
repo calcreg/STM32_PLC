@@ -1,0 +1,114 @@
+TYPE
+  LOGLEVEL : (CRITICAL, WARNING, INFO, DEBUG) := INFO;
+END_TYPE
+
+FUNCTION_BLOCK LOGGER
+  VAR_INPUT
+    TRIG : BOOL;
+    MSG : STRING;
+    LEVEL : LOGLEVEL := INFO;
+  END_VAR
+  VAR
+    TRIG0 : BOOL;
+  END_VAR
+
+  IF TRIG AND NOT TRIG0 THEN
+  {{
+   LogMessage(GetFbVar(LEVEL),(char*)GetFbVar(MSG, .body),GetFbVar(MSG, .len));
+  }}
+  END_IF;
+  TRIG0:=TRIG;
+END_FUNCTION_BLOCK
+
+
+PROGRAM BlinkOUT10
+  VAR_EXTERNAL
+    REDLED : BOOL;
+    ORANGELED : BOOL;
+    IN1 : BOOL;
+    LCDtext : STRING;
+  END_VAR
+
+  INITIAL_STEP Initial:
+  END_STEP
+
+  TRANSITION FROM Initial TO Step1
+    := IN1;
+  END_TRANSITION
+
+  STEP Step1:
+    REDLED(S);
+  END_STEP
+
+  TRANSITION FROM Step1 TO Step2
+    := Step1.t >= T#500ms;
+  END_TRANSITION
+
+  STEP Step2:
+    REDLED(R);
+  END_STEP
+
+  TRANSITION FROM Step2 TO Step6
+    := Step2.t >= T#500ms;
+  END_TRANSITION
+
+  STEP Step6:
+    STEP6_INLINE1(S);
+  END_STEP
+
+  ACTION STEP6_INLINE1:
+    LCDtext := 'red\n';
+  END_ACTION
+
+  TRANSITION FROM Step6 TO Initial
+    := TRUE;
+  END_TRANSITION
+
+  TRANSITION FROM Initial TO Step3
+    := NOT IN1;
+  END_TRANSITION
+
+  STEP Step3:
+    ORANGELED(S);
+  END_STEP
+
+  TRANSITION FROM Step3 TO Step4
+    := Step3.t >= T#250ms;
+  END_TRANSITION
+
+  STEP Step4:
+    ORANGELED(R);
+  END_STEP
+
+  TRANSITION FROM Step4 TO Step5
+    := Step4.t >= T#750ms;
+  END_TRANSITION
+
+  STEP Step5:
+    STEP5_INLINE2(S);
+  END_STEP
+
+  ACTION STEP5_INLINE2:
+    LCDtext := 'orange\n';
+  END_ACTION
+
+  TRANSITION FROM Step5 TO Initial
+    := TRUE;
+  END_TRANSITION
+
+END_PROGRAM
+
+
+CONFIGURATION Config0
+
+  RESOURCE Res0 ON PLC
+    VAR_GLOBAL
+      REDLED : BOOL;
+      ORANGELED : BOOL;
+      IN1 : BOOL;
+      LCDtext : STRING := 'OpenPLC V3\n';
+    END_VAR
+    TASK task0(INTERVAL := T#20ms,PRIORITY := 0);
+    PROGRAM instance0 WITH task0 : BlinkOUT10;
+  END_RESOURCE
+END_CONFIGURATION
