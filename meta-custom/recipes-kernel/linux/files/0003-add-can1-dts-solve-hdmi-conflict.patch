@@ -7,11 +7,11 @@ index f415e58..7b50d26 100644
  
  / {
 -	model = "STMicroelectronics STM32MP157A-DK1 Discovery Board";
-+	model = "STM32MP157A-DK1 Discovery Board -- Regan:DT patched for open CAN";
++	model = "STM32MP157A-DK1 Discovery Board -- Regan:DT patched for OpenPLC+CANFD";
  	compatible = "st,stm32mp157a-dk1", "st,stm32mp157";
  
  	aliases {
-@@ -26,3 +26,13 @@
+@@ -26,3 +26,181 @@
  		stdout-path = "serial0:115200n8";
  	};
  };
@@ -24,4 +24,173 @@ index f415e58..7b50d26 100644
 +};
 +
 +
++
++#include <dt-bindings/gpio/gpio.h>
++
++&i2c1 {
++    pcf8574: gpio@27 {
++        compatible = "nxp,pcf8574";
++        reg = <0x27>;
++        gpio-controller;
++        #gpio-cells = <2>;
++    };
++};
++
++/ {
++    aux_lcd: hd44780 {
++        compatible = "hit,hd44780";
++        display-height-chars = <2>;
++        display-width-chars = <16>;
++
++        /* Control Lines */
++        rs-gpios     = <&pcf8574 0 GPIO_ACTIVE_HIGH>;
++        rw-gpios     = <&pcf8574 1 GPIO_ACTIVE_HIGH>; /* Required by driver */
++        enable-gpios = <&pcf8574 2 GPIO_ACTIVE_HIGH>;
++
++        /* 4-bit Data Lines */
++        data-gpios   = <&pcf8574 4 GPIO_ACTIVE_HIGH>,
++                       <&pcf8574 5 GPIO_ACTIVE_HIGH>,
++                       <&pcf8574 6 GPIO_ACTIVE_HIGH>,
++                       <&pcf8574 7 GPIO_ACTIVE_HIGH>;
++
++        /* Backlight Control (Pin 3) */
++        backlight-gpios = <&pcf8574 3 GPIO_ACTIVE_HIGH>;
++    };
++};
++/* =========================================================================
++ * 1. PINMUX CONFIGURATIONS (&pinctrl)
++ * ========================================================================= */
++&pinctrl {
++    /* Digital Inputs - Internal Pull-Down Bias */
++    user_inputs_pins: user_inputs-0 {
++        pins {
++            pinmux = <STM32_PINMUX('A', 8, GPIO)>,   /* IN0 - CN2 Pin 7  (PA8)  */
++                     <STM32_PINMUX('B', 10, GPIO)>,  /* IN1 - CN2 Pin 8  (PB10) */
++                     <STM32_PINMUX('B', 12, GPIO)>,  /* IN2 - CN2 Pin 10 (PB12) */
++                     <STM32_PINMUX('G', 8, GPIO)>,   /* IN3 - CN2 Pin 11 (PG8)  */
++                     <STM32_PINMUX('I', 5, GPIO)>,   /* IN4 - CN2 Pin 12 (PI5)  */
++                     <STM32_PINMUX('D', 7, GPIO)>,   /* IN5 - CN2 Pin 13 (PD7)  */
++                     <STM32_PINMUX('G', 15, GPIO)>,  /* IN6 - CN2 Pin 15 (PG15) */
++                     <STM32_PINMUX('F', 1, GPIO)>;   /* IN7 - CN2 Pin 16 (PF1)  */
++            bias-pull-up; /* Holds floating pins at 3V3 until 0V applied */
++        };
++    };
++user_outputs_pins: user_outputs-0 {
++        pins {
++            pinmux = <STM32_PINMUX('F', 0, GPIO)>,   /* OUT1 - CN2 Pin 18 (PF0)  */
++                     <STM32_PINMUX('F', 9, GPIO)>,   /* OUT2 - CN2 Pin 19 (PF9)  */
++                     <STM32_PINMUX('F', 8, GPIO)>,   /* OUT3 - CN2 Pin 21 (PF8)  */
++                     <STM32_PINMUX('F', 4, GPIO)>,   /* OUT4 - CN2 Pin 22 (PF4)  */
++                     <STM32_PINMUX('F', 7, GPIO)>,   /* OUT5 - CN2 Pin 23 (PF7)  */
++                     <STM32_PINMUX('F', 6, GPIO)>,   /* OUT6 - CN2 Pin 24 (PF6)  */
++                     <STM32_PINMUX('F', 3, GPIO)>,   /* OUT7 - CN2 Pin 26 (PF3)  */
++                     <STM32_PINMUX('F', 15, GPIO)>,  /* OUT8 - CN2 Pin 27 (PF15) */
++                     <STM32_PINMUX('A', 13, GPIO)>,  /* OUT9 - CN2 Pin 26 (PA13) RED LED */
++                     <STM32_PINMUX('H', 7, GPIO)>;   /* OUT10 - CN2 Pin 27 (PH7) ORANGE LED */
++            drive-push-pull;
++            bias-pull-down;
++        };
++    };
++
++    /* PWM 1 & 2 Pinmux */
++    pwm1_pins: pwm1-0 {
++        pins {
++            pinmux = <STM32_PINMUX('E', 9, AF1)>; /* TIM1_CH1 - CN2 Pin 18 */
++            bias-pull-down;
++            drive-push-pull;
++            slew-rate = <0>;
++        };
++    };
++
++    pwm2_pins: pwm2-0 {
++        pins {
++            pinmux = <STM32_PINMUX('A', 15, AF1)>; /* TIM2_CH1 - CN2 Pin 29 */
++            bias-pull-down;
++            drive-push-pull;
++            slew-rate = <0>;
++        };
++    };
++
++    /* ADC Pinmux (ADC1_IN14 on PB11) */
++    adc1_pins: adc1-0 {
++        pins {
++            pinmux = <STM32_PINMUX('B', 11, ANALOG)>; /* ADC 2 - CN2 Pin 32 */
++        };
++    };
++ };
++
++/* =========================================================================
++ * 2. HARDWARE PERIPHERALS ACTIVATION
++ * ========================================================================= */
++
++/* PWM 1 Activation (Timer 1) */
++&timers1 {
++    status = "okay";
++    /delete-property/ dmas;
++    /delete-property/ dma-names;
++
++    pwm1: pwm {
++        pinctrl-0 = <&pwm1_pins>;
++        pinctrl-names = "default";
++        status = "okay";
++    };
++};
++
++/* PWM 2 Activation (Timer 2) */
++&timers2 {
++    status = "okay";
++    /delete-property/ dmas;
++    /delete-property/ dma-names;
++
++    pwm2: pwm {
++        pinctrl-0 = <&pwm2_pins>;
++        pinctrl-names = "default";
++        status = "okay";
++    };
++};
++
++/* ADC1 Activation (ANA0 on Pin 31 & PB11 on Pin 32) */
++&adc {
++    pinctrl-0 = <&adc1_pins>;
++    pinctrl-names = "default";
++    status = "okay";
++    
++    adc1: adc@0 {
++        status = "okay";
++        st,adc-channels = <14 18>; /* ADC1_IN14 (PB11) & ADC1_IN18 (ANA0) */
++    };
++};
++
++/* =========================================================================
++ * 3. USER GPIO DECLARATION NODE
++ * ========================================================================= */
++/ {
++    user_gpios {
++        compatible = "gpio-keys";
++        pinctrl-names = "default";
++        pinctrl-0 = <&user_inputs_pins>;
++
++        /* --- 8 DIGITAL INPUTS --- */
++        in1 { label = "IN_1"; gpios = <&gpioa 8 GPIO_ACTIVE_LOW>; };  /* CN2 Pin 7  (PA8)  */
++        in2 { label = "IN_2"; gpios = <&gpiob 10 GPIO_ACTIVE_LOW>; }; /* CN2 Pin 8  (PB10) */
++        in3 { label = "IN_3"; gpios = <&gpiob 12 GPIO_ACTIVE_LOW>; }; /* CN2 Pin 10 (PB12) */
++        in4 { label = "IN_4"; gpios = <&gpiog 8 GPIO_ACTIVE_LOW>; };  /* CN2 Pin 11 (PG8)  */
++        in5 { label = "IN_5"; gpios = <&gpioi 5 GPIO_ACTIVE_LOW>; };  /* CN2 Pin 12 (PI5)  */
++        in6 { label = "IN_6"; gpios = <&gpiod 7 GPIO_ACTIVE_LOW>; };  /* CN2 Pin 13 (PD7)  */
++        in7 { label = "IN_7"; gpios = <&gpiog 15 GPIO_ACTIVE_LOW>; }; /* CN2 Pin 15 (PG15) */
++        in8 { label = "IN_8"; gpios = <&gpiof 1 GPIO_ACTIVE_LOW>; };  /* CN2 Pin 16 (PF1)  */
++
++        /* --- 8 DIGITAL OUTPUTS --- */
++        out1 { label = "OUT_1"; gpios = <&gpiof 0 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 18 (PF0)  */
++        out2 { label = "OUT_2"; gpios = <&gpiof 9 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 19 (PF9)  */
++        out3 { label = "OUT_3"; gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 21 (PF9) */
++        out4 { label = "OUT_4"; gpios = <&gpiof 4 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 22 (PF4)  */
++        out5 { label = "OUT_5"; gpios = <&gpiof 7 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 23 (PF7)  */
++        out6 { label = "OUT_6"; gpios = <&gpiof 6 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 24 (PF6) */
++        out7 { label = "OUT_7"; gpios = <&gpiof 3 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 26 (PF3) */
++        out8 { label = "OUT_8"; gpios = <&gpiof 15 GPIO_ACTIVE_HIGH>; }; /* CN2 Pin 27 (PF15) */
++        out9 { label = "OUT_9"; gpios = <&gpioa 13 GPIO_ACTIVE_HIGH>; }; /* CN2 Pin 26 (PA13) */
++        out10 { label = "OUT_10"; gpios = <&gpioh 7 GPIO_ACTIVE_HIGH>; };  /* CN2 Pin 27 (PH7) */
++    };
++};
 +
