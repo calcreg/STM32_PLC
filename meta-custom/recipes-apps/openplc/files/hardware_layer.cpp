@@ -87,11 +87,13 @@ void write_log(const char *text) {
 }
 
 static char previous_lcd_text[32] = "";
+static bool LCDlit = false; // Whatever if it is lit or not, we light it once at start
 
 static void write_to_lcd_device(const char *text, uint8_t length)
 {
     int lcd_fd = open("/dev/lcd", O_WRONLY);
     if (lcd_fd >= 0) {
+        write(lcd_fd, "\x1b[2J", 4);
         write(lcd_fd, text, length);
         close(lcd_fd);
     }
@@ -176,7 +178,7 @@ void updateBuffersIn()
         if (in_pins[i].line_handle != NULL && bool_input[0][i] != NULL) {
             int val = gpiod_line_get_value(in_pins[i].line_handle);
             if (val >= 0) {
-                *bool_input[0][i] = (IEC_BOOL)val;
+                *bool_input[0][i] = !(IEC_BOOL)val; //ACTIVE_LOW in dt but have to NOT line_get_value.
             }
         }
     }
@@ -207,11 +209,26 @@ void updateBuffersOut()
     memcpy(current_text, ____MD0.body, len);
     current_text[len] = '\0';
 
+    //Light first time only
+    if (LCDlit == false) {
+        char lightstring[]= "\x1b[L+\n";
+        write_to_lcd_device(lightstring, strlen(lightstring));
+        LCDlit = true;
+    }
+
     // Only write to character device if text has changed
     if (strcmp(current_text, previous_lcd_text) != 0) {
+        char buf[128];                                                                                   
         write_to_lcd_device(current_text, len);
         strncpy(previous_lcd_text, current_text, sizeof(previous_lcd_text));
+        snprintf(buf, sizeof(buf), "LCD: Text changed [%s] len[%d]\n",____MD0.body,____MD0.len);
+        write_log(buf);
     }
+    /*else{
+            char buf[128];                                                                                   
+            snprintf(buf, sizeof(buf), "LCD: Text UNCHANGED [%s] len[%d]\n",____MD0.body,____MD0.len);
+            write_log(buf);   
+    }*/
 
 }
 
