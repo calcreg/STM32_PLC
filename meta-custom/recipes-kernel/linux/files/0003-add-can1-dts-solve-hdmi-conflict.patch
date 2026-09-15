@@ -11,7 +11,7 @@ index f415e58..7b50d26 100644
  	compatible = "st,stm32mp157a-dk1", "st,stm32mp157";
  
  	aliases {
-@@ -26,3 +26,181 @@
+@@ -26,3 +26,167 @@
  		stdout-path = "serial0:115200n8";
  	};
  };
@@ -92,72 +92,58 @@ index f415e58..7b50d26 100644
 +        };
 +    };
 +
-+    /* PWM 1 & 2 Pinmux */
-+    pwm1_pins: pwm1-0 {
++    /* ADC Pinmux (ADC1_INP2 on PF11) */
++    adc1_pins_a: adc1-pins-0 {
 +        pins {
-+            pinmux = <STM32_PINMUX('E', 9, AF1)>; /* TIM1_CH1 - CN2 Pin 18 */
-+            bias-pull-down;
-+            drive-push-pull;
-+            slew-rate = <0>;
++            pinmux = <STM32_PINMUX('F', 11, ANALOG)>;
 +        };
 +    };
 +
-+    pwm2_pins: pwm2-0 {
++    adc1_sleep_pins_a: adc1-sleep-pins-0 {
 +        pins {
-+            pinmux = <STM32_PINMUX('A', 15, AF1)>; /* TIM2_CH1 - CN2 Pin 29 */
-+            bias-pull-down;
-+            drive-push-pull;
-+            slew-rate = <0>;
++            pinmux = <STM32_PINMUX('F', 11, ANALOG)>; /* ADC1_INP2 - CN2 Pin 40 */
++            bias-high-z;
 +        };
 +    };
-+
-+    /* ADC Pinmux (ADC1_IN14 on PB11) */
-+    adc1_pins: adc1-0 {
-+        pins {
-+            pinmux = <STM32_PINMUX('B', 11, ANALOG)>; /* ADC 2 - CN2 Pin 32 */
-+        };
-+    };
-+ };
++};
 +
 +/* =========================================================================
 + * 2. HARDWARE PERIPHERALS ACTIVATION
 + * ========================================================================= */
-+
-+/* PWM 1 Activation (Timer 1) */
-+&timers1 {
++/* Activation (PWM3 PC7 on Pin33 and PWM5 PH11 on pin31 ) */
++&timers3 {
 +    status = "okay";
-+    /delete-property/ dmas;
-+    /delete-property/ dma-names;
 +
-+    pwm1: pwm {
-+        pinctrl-0 = <&pwm1_pins>;
-+        pinctrl-names = "default";
++    pwm {
++        pinctrl-names = "default", "sleep";
++        pinctrl-0 = <&pwm3_pins_a>;
++        pinctrl-1 = <&pwm3_sleep_pins_a>;
 +        status = "okay";
 +    };
 +};
 +
-+/* PWM 2 Activation (Timer 2) */
-+&timers2 {
++&timers5 {
 +    status = "okay";
-+    /delete-property/ dmas;
-+    /delete-property/ dma-names;
 +
-+    pwm2: pwm {
-+        pinctrl-0 = <&pwm2_pins>;
-+        pinctrl-names = "default";
++    pwm {
++        pinctrl-names = "default", "sleep";
++        pinctrl-0 = <&pwm5_pins_a>;
++        pinctrl-1 = <&pwm5_sleep_pins_a>;
 +        status = "okay";
 +    };
 +};
 +
-+/* ADC1 Activation (ANA0 on Pin 31 & PB11 on Pin 32) */
++/* ADC1 Activation (PF11 on Pin 40) */
 +&adc {
-+    pinctrl-0 = <&adc1_pins>;
-+    pinctrl-names = "default";
++    pinctrl-names = "default", "sleep";
++    pinctrl-0 = <&adc1_pins_a>;
++    pinctrl-1 = <&adc1_sleep_pins_a>;
 +    status = "okay";
-+    
++
 +    adc1: adc@0 {
 +        status = "okay";
-+        st,adc-channels = <14 18>; /* ADC1_IN14 (PB11) & ADC1_IN18 (ANA0) */
++        /* Enable channel 2 (which corresponds to PF11 / ADC1_INP2) */
++        st,adc-channels = <2>;
 +    };
 +};
 +
