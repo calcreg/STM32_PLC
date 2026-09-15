@@ -50,6 +50,7 @@ extern IEC_UINT *int_output[1024];
 #define PWM2_ENABLE    "/sys/class/pwm/pwmchip4/pwm0/enable"
 
 #define BASE_PERIOD_NS 1000000 // 1 kHz base frequency (1,000,000 ns)
+#define BASEMULTIPLE 15259 // BASE_PERIOD_NS/65535
 
 static int duty1_fd = -1;
 static int duty2_fd = -1;
@@ -262,14 +263,19 @@ void updateBuffersOut()
     // 2. Process PWM Outputs (%QW0 & %QW1)
     if (int_output != NULL) {
         char buf[16];
+        char buf2[128];
         int len;
 
         // %QW0 -> PWM 1
         if (int_output[0] != NULL && duty1_fd >= 0) {
             uint16_t plc_val0 = *int_output[0];
-            uint32_t duty_ns0 = ((uint32_t)plc_val0 * BASE_PERIOD_NS) / 65535;
+            uint32_t duty_ns0 = (uint32_t)plc_val0 * BASEMULTIPLE / 1000;
+            snprintf(buf2, sizeof(buf2), "PWM0: dc[DWORD=%d] is %d ns\n",plc_val0,duty_ns0); //Debug
+            write_log(buf2);
+
             len = snprintf(buf, sizeof(buf), "%u", duty_ns0);
             pwrite(duty1_fd, buf, len, 0);
+
         }
 
         // %QW1 -> PWM 2
