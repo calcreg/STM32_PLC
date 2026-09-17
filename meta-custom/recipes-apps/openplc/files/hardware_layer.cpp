@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <algorithm>
 
 // Type IEC_BOOL conforme a MatIEC
 typedef uint8_t IEC_BOOL;
@@ -113,16 +114,41 @@ void write_log(const char *text) {
 static char previous_lcd_text[32] = "";
 static bool LCDlit = false; // Whatever if it is lit or not, we light it once at start
 
-static void write_to_lcd_device(const char *text, uint8_t length)
+static void write_to_lcd_device(const char *src_text, uint8_t length)
 {
     int lcd_fd = open("/dev/lcd", O_WRONLY);
-    if (lcd_fd >= 0) {
-	//First erase both lcd lines
-        write(lcd_fd, "\x1b[2J", 4);
-        write(lcd_fd, text, length);
-        close(lcd_fd);
+    if (lcd_fd < 0) return;
+
+    char out_buf[128];
+    
+    // 1. Repositionnement en top-left (0,0) sans Clear Screen
+    strcpy(out_buf, "\x1b[H");
+    size_t out_len = 3;
+
+    // 2. Copie du texte et insertion de \x1b[Lk avant chaque \n
+    uint8_t max_bytes = std::min((uint8_t)32, length); // Limite raisonnable pour 16x2
+    for (uint8_t i = 0; i < max_bytes; i++) {
+        if (src_text[i] == '\n') {
+            // Ajoute \x1b[Lk puis le saut de ligne \n
+            memcpy(out_buf + out_len, "\x1b[Lk\n", 5);
+            out_len += 5;
+        } else {
+            out_buf[out_len++] = src_text[i];
+        }
     }
+
+    // 3. Effacement de la fin de la 2e ligne si aucun \n n'a été traité à la fin
+    memcpy(out_buf + out_len, "\x1b[Lk", 4);
+    out_len += 4;
+
+    // 4. Écriture unique sur le périphérique LCD
+    write(lcd_fd, out_buf, out_len);
+    close(lcd_fd);
 }
+
+
+
+
 
 static void write_sysfs(const char *path, const char *value) {
     int fd = open(path, O_WRONLY);
@@ -281,7 +307,7 @@ void updateBuffersOut()
         // %QW1 -> PWM 2
         if (int_output[1] != NULL && duty2_fd >= 0) {
             uint16_t plc_val1 = *int_output[1];
-            uint32_t duty_ns1 = ((uint32_t)plc_val1 * BASEMULTIPLE / 1000;
+            uint32_t duty_ns1 = (uint32_t)plc_val1 * BASEMULTIPLE / 1000;
             len = snprintf(buf, sizeof(buf), "%u", duty_ns1);
             pwrite(duty2_fd, buf, len, 0);
         }
