@@ -1,0 +1,556 @@
+[
+    {
+        "id": "5048fdb1707ef592",
+        "type": "tab",
+        "label": "Flux 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "194bb0b05f3e58d7",
+        "type": "modbus-client",
+        "name": "STM32MP1-OpenPLC_v3",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.29",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "b70071205f16480e",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "67c22a9603382957",
+        "type": "ui_tab",
+        "name": "Layout",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "37cc26c0e2af5999",
+        "type": "ui_group",
+        "name": "PLC Inputs",
+        "tab": "67c22a9603382957",
+        "order": 1,
+        "disp": true,
+        "width": "3",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "970ec5ee8f9ecf7e",
+        "type": "ui_group",
+        "name": "OUTPUTS",
+        "tab": "67c22a9603382957",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "54d601c927e0c1d8",
+        "type": "ui_spacer",
+        "z": "5048fdb1707ef592",
+        "name": "spacer",
+        "group": "37cc26c0e2af5999",
+        "order": 1,
+        "width": "1",
+        "height": "1"
+    },
+    {
+        "id": "7a5faa3bbd35afe4",
+        "type": "ui_spacer",
+        "z": "5048fdb1707ef592",
+        "name": "spacer",
+        "group": "970ec5ee8f9ecf7e",
+        "order": 1,
+        "width": "1",
+        "height": "1"
+    },
+    {
+        "id": "9475ce95277aefba",
+        "type": "ui_spacer",
+        "z": "5048fdb1707ef592",
+        "name": "spacer",
+        "group": "",
+        "order": 1,
+        "width": "1",
+        "height": "1"
+    },
+    {
+        "id": "17f102402249ebe6",
+        "type": "modbus-read",
+        "z": "5048fdb1707ef592",
+        "name": "Coils",
+        "topic": "",
+        "showStatusActivities": true,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "3",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "194bb0b05f3e58d7",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "f317a22ba48b8b58"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d717e4f7111b3cab",
+        "type": "modbus-read",
+        "z": "5048fdb1707ef592",
+        "name": "Inputs",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Input",
+        "adr": "0",
+        "quantity": "3",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "194bb0b05f3e58d7",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "1bb61be5f6ff1fde",
+                "84f79d4b4e647c71",
+                "f2d84d2cbf560c4f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1bb61be5f6ff1fde",
+        "type": "change",
+        "z": "5048fdb1707ef592",
+        "name": "Extract %IX0.1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[1]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 260,
+        "wires": [
+            [
+                "eeaa396806227c05"
+            ]
+        ]
+    },
+    {
+        "id": "eeaa396806227c05",
+        "type": "ui_switch",
+        "z": "5048fdb1707ef592",
+        "name": "",
+        "label": "Btn 1",
+        "tooltip": "",
+        "group": "37cc26c0e2af5999",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 530,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f2d84d2cbf560c4f",
+        "type": "change",
+        "z": "5048fdb1707ef592",
+        "name": "Extract %IX0.2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[2]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "2463427bf387cb5c"
+            ]
+        ]
+    },
+    {
+        "id": "84f79d4b4e647c71",
+        "type": "change",
+        "z": "5048fdb1707ef592",
+        "name": "Extract %IX0.0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "83522421e1d364f5"
+            ]
+        ]
+    },
+    {
+        "id": "438392b94f241e17",
+        "type": "ui_template",
+        "z": "5048fdb1707ef592",
+        "group": "970ec5ee8f9ecf7e",
+        "name": "PLC Automate",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<div\n    style=\"position: relative; width: 100%; max-width: 258px; height: 320px; background: #1e293b; border-radius: 12px; border: 2px solid #334155; color: #f8fafc; font-family: sans-serif; box-shadow: 0 6px 15px rgba(0,0,0,0.4); overflow: hidden; margin: 0 auto;\">\n\n    <!-- ================= BACKGROUND IMAGE ================= -->\n    <img src=\"/img/PLC_Automate.jpg\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.5; object-fit: cover; z-index: 0;\">\n\n    <!-- ================= CONTENT WRAPPER (Handles Padding) ================= -->\n    <div\n        style=\"position: relative; width: 100%; height: 100%; padding: 15px; box-sizing: border-box; z-index: 1; display: flex; flex-direction: column;\">\n\n         <!-- ================= SPOT 1: Relay1 (%QX0.0) ================= -->\n        <div style=\"position: absolute; top: 235px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n            <div style=\"\n                width: 16px; \n                height: 16px; \n                border-radius: 50%; \n                border: 2px solid #fff;\n                background-color: {{ (msg.payload && msg.payload.relay1) ? '#00FF00' : '#333333' }};\n                box-shadow: {{ (msg.payload && msg.payload.relay1) ? '0 0 12px #00FF00' : 'none' }};\n                transition: all 0.2s ease-in-out;\">\n            </div>\n            <span style=\"font-size: 13px; font-weight: 600;\">R1</span>\n        </div>\n\n        <!-- ================= SPOT 2: Relay2 (%QX0.1) ================= -->\n        <div style=\"position: absolute; top: 194px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n            <div style=\"\n                width: 16px; \n                height: 16px; \n                border-radius: 50%; \n                border: 2px solid #fff;\n                background-color: {{ (msg.payload && msg.payload.relay2) ? '#00FF00' : '#333333' }};\n                box-shadow: {{ (msg.payload && msg.payload.Relay2) ? '0 0 12px #00FF00' : 'none' }};\n                transition: all 0.2s ease-in-out;\">\n            </div>\n            <span style=\"font-size: 13px; font-weight: 600;\">R2</span>\n        </div>\n\n        <!-- ================= SPOT 3: Relay3 (%QX0.2) ================= -->\n        <div style=\"position: absolute; top: 147px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n            <div style=\"\n                width: 16px; \n                height: 16px; \n                border-radius: 50%; \n                border: 2px solid #fff;\n                background-color: {{ (msg.payload && msg.payload.relay3) ? '#EF4444' : '#333333' }};\n                box-shadow: {{ (msg.payload && msg.payload.Relay3) ? '0 0 12px #EF4444' : 'none' }};\n                transition: all 0.2s ease-in-out;\">\n            </div>\n            <span style=\"font-size: 13px; font-weight: 600;\">R3</span>\n        </div>\n\n        <!-- ================= SPOT 4: Relay4 (%QX0.3) ================= -->\n        <div style=\"position: absolute; top: 106px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n            <div style=\"\n                width: 16px; \n                height: 16px; \n                border-radius: 50%; \n                border: 2px solid #fff;\n                background-color: {{ (msg.payload && msg.payload.relay4) ? '#EF4444' : '#333333' }};\n                box-shadow: {{ (msg.payload && msg.payload.Relay4) ? '0 0 12px #EF4444' : 'none' }};\n                transition: all 0.2s ease-in-out;\">\n            </div>\n            <span style=\"font-size: 13px; font-weight: 600;\">R4</span>\n        </div>\n\n            <!-- ================= SPOT 5: Motor PWM (motorpwm1) ================= -->\n            <div style=\"position: absolute; top: 63px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n                <div style=\"\n                            width: 16px; \n                            height: 16px; \n                            border-radius: 50%; \n                            border: 2px solid #fff;\n                            background-color: {{ \n                                !msg.payload || msg.payload.motorpwm1 === 0 ? '#000000' : \n                                msg.payload.motorpwm1 < 7500 ? '#006400' : \n                                msg.payload.motorpwm1 < 15000 ? '#00FF00' : \n                                msg.payload.motorpwm1 <= 32000 ? '#EAB308' : \n                                msg.payload.motorpwm1 <= 48000 ? '#B91C1C' : '#EF4444' \n                            }};\n                            box-shadow: {{ \n                                !msg.payload || msg.payload.motorpwm1 === 0 ? 'none' : \n                                '0 0 12px ' + (\n                                    msg.payload.motorpwm1 < 7500 ? '#006400' : \n                                    msg.payload.motorpwm1 < 15000 ? '#00FF00' : \n                                    msg.payload.motorpwm1 <= 32000 ? '#EAB308' : \n                                    msg.payload.motorpwm1 <= 48000 ? '#B91C1C' : '#EF4444'\n                                )\n                            }};\n                            transition: all 0.2s ease-in-out;\">\n                </div>\n                <span style=\"font-size: 13px; font-weight: 600;\">PWM1 ({{ msg.payload.motorpwm1 || 0 }})</span>\n            </div>\n\n        <!-- ================= SPOT 6: Motor PWM (%QX0.5) ================= -->\n        <div style=\"position: absolute; top: 12px; left: 20px; display: flex; align-items: center; gap: 8px;\">\n            <div style=\"\n                width: 16px; \n                height: 16px; \n                border-radius: 50%; \n                border: 2px solid #fff;\n                background-color: {{ (msg.payload && msg.payload.pwm2) ? '#EF4444' : '#333333' }};\n                box-shadow: {{ (msg.payload && msg.payload.pwm2) ? '0 0 12px #EF4444' : 'none' }};\n                transition: all 0.2s ease-in-out;\">\n            </div>\n            <span style=\"font-size: 13px; font-weight: 600;\">PWM2</span>\n        </div>\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 740,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83522421e1d364f5",
+        "type": "ui_switch",
+        "z": "5048fdb1707ef592",
+        "name": "",
+        "label": "Btn 0",
+        "tooltip": "",
+        "group": "37cc26c0e2af5999",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 530,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2463427bf387cb5c",
+        "type": "ui_switch",
+        "z": "5048fdb1707ef592",
+        "name": "",
+        "label": "Btn 2",
+        "tooltip": "",
+        "group": "37cc26c0e2af5999",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 530,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e22ac135bbb03556",
+        "type": "modbus-read",
+        "z": "5048fdb1707ef592",
+        "name": "Variables",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "200",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "194bb0b05f3e58d7",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "23a790eee1d3bce0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7623d6dd852fc067",
+        "type": "function",
+        "z": "5048fdb1707ef592",
+        "name": "Machine State",
+        "func": "// Keep a persistent context or combine incoming signals\n// For example, if you trigger this function whenever any output changes:\n// DEBUG: See what is actually arriving from the PLC\n//node.warn(\"Incoming Topic: \" + msg.topic + \" | Payload: \" + JSON.stringify(msg.payload));\n\ncontext.set(\"machineState\", context.get(\"machineState\") || {\n    relay1: false,\n    relay2: false,\n    relay3: false,\n    relay4: false,\n    motorpwm1: 0,\n    motorpwm2: 0\n});\n\nlet state = context.get(\"machineState\");\n\n// Update the specific output based on the topic or incoming msg\n\nif (msg.topic === \"polling_qx\") {\n    state.relay1 = msg.payload[0];\n    state.relay2 = msg.payload[1];\n    state.relay3 = msg.payload[2];\n    state.relay4 = msg.payload[3];\n}\nelse if (msg.topic === \"polling_qw\") {\n    state.motorpwm1 = msg.payload[0];\n    state.motorpwm2 = msg.payload[1];\n}\nmsg.payload = state;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 100,
+        "wires": [
+            [
+                "438392b94f241e17"
+            ]
+        ]
+    },
+    {
+        "id": "f317a22ba48b8b58",
+        "type": "function",
+        "z": "5048fdb1707ef592",
+        "name": "polling %QX",
+        "func": "msg.topic = \"polling_qx\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 40,
+        "wires": [
+            [
+                "7623d6dd852fc067"
+            ]
+        ]
+    },
+    {
+        "id": "23a790eee1d3bce0",
+        "type": "function",
+        "z": "5048fdb1707ef592",
+        "name": "polling QW",
+        "func": "msg.topic = \"polling_qw\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "7623d6dd852fc067"
+            ]
+        ]
+    }
+]
