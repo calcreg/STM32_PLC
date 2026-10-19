@@ -40,4 +40,15 @@ Some implementations of scripts need to be made to fully manage the installation
 Anyway this installation needs to know what you are doing, at the risk of spending some time.
 
 
+# Supervision with Node-RED
+
+We've built a simple supervision test with node-RED with modbus/TCP data exchange.
+This idea is to get a picture of the apparatus itself and obtain a real-time signal of what's going on remotely on the PLC :
+
+<p align="center">
+  <img src="Node-RED/SupervisionNode-RED.png" alt="Screenshot 1" width="50%" />
+</p>
+
+It is just an example to test the redirection of data and msg.topic change. A javascript coding helps reinterpreting the incoming data.
+
 
