@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="309px"
+   height="384px"
+   viewBox="0 0 210 230"
+   version="1.1"
+   id="svg3835"
+   sodipodi:docname="dessin.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <defs
+     id="defs3829">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5177"
+       osb:paint="gradient">
+      <stop
+         style="stop-color:#131913;stop-opacity:1;"
+         offset="0"
+         id="stop5173" />
+      <stop
+         style="stop-color:#131913;stop-opacity:0;"
+         offset="1"
+         id="stop5175" />
+    </linearGradient>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4887"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#ea0000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5177"
+       id="linearGradient5183"
+       x1="125.89352"
+       y1="50.842431"
+       x2="180.94582"
+       y2="50.842431"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="714.54256"
+     inkscape:cy="620.01528"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="704"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+ <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       y="5.5299211"
+       x="3.7041645"
+       id="image3919"
+       xlink:href="/img/PLC_Automate.jpg"
+       preserveAspectRatio="none"
+       height="238.22586"
+       width="201.23456" />
+    <ellipse
+       id="path3947"
+       cx="86.934525"
+       cy="188.52083"
+       rx="9.4494047"
+       ry="9.8273811"
+       style="stroke-width:0.26458332">
+      <title
+         id="title3988">btn1</title>
+    </ellipse>
+    <ellipse
+       id="path3947-3"
+       cx="128.51192"
+       cy="189.65475"
+       rx="9.4494047"
+       ry="9.8273811"
+       style="stroke-width:0.26458332">
+      <title
+         id="title3990">btn2</title>
+    </ellipse>
+    <ellipse
+       id="path3947-5"
+       cx="170.84525"
+       cy="188.87587"
+       rx="9.4494047"
+       ry="9.8273811"
+       style="stroke-width:0.26458332">
+      <title
+         id="title3992">btn3</title>
+    </ellipse>
+    <circle
+       id="path3994"
+       cx="26.64732"
+       cy="194.24582"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <circle
+       id="path3994-3"
+       cx="26.813383"
+       cy="163.08572"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <circle
+       id="path3994-5"
+       cx="26.836308"
+       cy="128.77765"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <circle
+       id="path3994-6"
+       cx="26.458334"
+       cy="96.672615"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <circle
+       id="path3994-2"
+       cx="26.213993"
+       cy="66.923203"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <circle
+       id="path3994-9"
+       cx="26.168133"
+       cy="27.63661"
+       r="5.8586307"
+       style="stroke-width:0.26458332" />
+    <path
+       id="path4035"
+       style="opacity:0.75;fill:#0f31da;fill-opacity:0.37320575;stroke:#008304;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:type="arc"
+       sodipodi:cx="154.21451"
+       sodipodi:cy="49.527336"
+       sodipodi:rx="21.648832"
+       sodipodi:ry="24.607723"
+       sodipodi:start="3.1187733"
+       sodipodi:end="0.036716956"
+       d="m 132.57131,50.08882 a 21.648832,24.607723 0 0 1 10.76307,-21.835712 21.648832,24.607723 0 0 1 22.0193,0.173923 21.648832,24.607723 0 0 1 10.49507,22.003623"
+       sodipodi:open="true" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:url(#linearGradient5183);stroke-width:0.26458332"
+       x="125.68715"
+       y="52.971798"
+       id="text5171"><tspan
+         sodipodi:role="line"
+         id="tspan5169"
+         x="125.68715"
+         y="52.971798"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46666622px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#faf4f4;stroke-width:0.26458332;fill-opacity:1;stroke:#131913;stroke-opacity:1">Motor Speed</tspan></text>
+  </g>
+</svg>
